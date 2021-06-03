@@ -1,0 +1,23 @@
+plugins {
+    id 'war'
+    id 'org.springframework.boot' version '2.4.4'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+}
+
+group 'com.epam.esm'
+version '0.0.1-SNAPSHOT'
+
+dependencies {
+    implementation project(':core')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    implementation group: 'org.springframework.data', name: 'spring-data-rest-hal-browser', version: '3.3.9.RELEASE'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.4.5'
+}
+
+test {
+    useJUnitPlatform()
+}
