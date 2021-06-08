@@ -84,8 +84,13 @@ public class CertificateServiceImpl implements CertificateService {
 
         certificateDto.setTags(tagService.attachTagsWithIds(certificateDto.getTags()));
 
+        Certificate existingCertificate = certificateRepository
+                .findById(certificateDto.getId())
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorCode.NO_CERTIFICATE_WITH_ID,
+                        certificateDto.getId()));
+
         DtoConverter<Certificate, CertificateDto> certificateConverter = new CertificateDtoConverter();
-        Certificate certificateForUpdate = certificateConverter.convertToEntity(certificateDto, new Certificate());
+        Certificate certificateForUpdate = certificateConverter.convertToEntity(certificateDto, existingCertificate);
         return certificateConverter.convertToDto(certificateRepository.update(certificateForUpdate));
     }
 

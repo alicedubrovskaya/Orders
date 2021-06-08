@@ -8,10 +8,7 @@ import com.epam.esm.service.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -68,19 +65,43 @@ public class TagRepositoryImpl implements TagRepository {
         return query.getResultList();
     }
 
+//    @Override
+//    public Optional<Tag> findMostPopular() {
+//        try {
+//            Query query = em.createNativeQuery(
+//                    "SELECT tag.id, tag.name FROM tag JOIN certificate_tag ON tag.id=certificate_tag.tag_id " +
+//                            "JOIN certificate ON certificate_tag.tag_id = certificate.id " +
+//                            "JOIN ordr ON certificate.id = ordr.id " +
+//                            "JOIN  user ON ordr.user_id=user.id WHERE user.id= (" +
+//                            "SELECT user.id FROM user JOIN ordr on user.id = ordr.user_id GROUP BY user.id " +
+//                            "ORDER BY SUM(cost) DESC LIMIT 1) " +
+//                            "GROUP BY tag.name, tag.id ORDER BY COUNT(tag.name) DESC LIMIT 1",
+//                    Tag.class);
+//            Tag tag = (Tag) query.getSingleResult();
+//            return Optional.ofNullable(tag);
+//        } catch (NoResultException e) {
+//            return Optional.empty();
+//        }
+//    }
+
+
     @Override
     public Optional<Tag> findMostPopular() {
-        Query query = em.createNativeQuery(
-                "SELECT tag.id, tag.name FROM tag JOIN certificate_tag ON tag.id=certificate_tag.tag_id " +
-                        "JOIN certificate ON certificate_tag.tag_id = certificate.id " +
-                        "JOIN ordr ON certificate.id = ordr.id " +
-                        "JOIN  user ON ordr.user_id=user.id WHERE user.id= (" +
-                        "SELECT user.id FROM user JOIN ordr on user.id = ordr.user_id GROUP BY user.id " +
-                        "ORDER BY SUM(cost) DESC LIMIT 1) " +
-                        "GROUP BY tag.name, tag.id ORDER BY COUNT(tag.name) DESC LIMIT 1",
-                Tag.class);
-        Tag tag = (Tag) query.getSingleResult();
-        return Optional.ofNullable(tag);
+        try {
+            Query query = em.createNativeQuery(
+                    "SELECT tag.id, tag.name FROM tag JOIN certificate_tag ON tag.id=certificate_tag.tag_id " +
+                            "JOIN certificate ON certificate_tag.certificate_id = certificate.id " +
+                            "JOIN ordr ON certificate.id = ordr.certificate_id " +
+                            "JOIN  user ON ordr.user_id=user.id WHERE user.id= (" +
+                            "SELECT user.id FROM user JOIN ordr on user.id = ordr.user_id GROUP BY user.id " +
+                            "ORDER BY SUM(cost) DESC LIMIT 1) " +
+                            "GROUP BY tag.name, tag.id ORDER BY COUNT(tag.name) DESC LIMIT 1",
+                    Tag.class);
+            Tag tag = (Tag) query.getSingleResult();
+            return Optional.ofNullable(tag);
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
 
     @Override

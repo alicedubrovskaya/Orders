@@ -1,6 +1,7 @@
 package com.epam.esm.service.service.impl;
 
 import com.epam.esm.service.dto.OrderDto;
+import com.epam.esm.service.dto.OrderParamsDto;
 import com.epam.esm.service.dto.PageDto;
 import com.epam.esm.service.entity.Certificate;
 import com.epam.esm.service.entity.Order;
@@ -46,12 +47,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional
     @Override
-    public OrderDto makeOrder(Long userId, Long certificateId) {
-        User user = userRepository.findById(userId).orElseThrow(() ->
-                new ResourceNotFoundException(ErrorCode.NO_USER_WITH_ID, userId));
+    public OrderDto makeOrder(@Valid OrderParamsDto orderParamsDto) {
+        User user = userRepository.findById(orderParamsDto.getUserId()).orElseThrow(() ->
+                new ResourceNotFoundException(ErrorCode.NO_USER_WITH_ID, orderParamsDto.getUserId()));
 
-        Certificate certificate = certificateRepository.findById(certificateId).orElseThrow(() ->
-                new ResourceNotFoundException(ErrorCode.NO_CERTIFICATE_WITH_ID, certificateId));
+        Certificate certificate = certificateRepository.findById(orderParamsDto.getCertificateId()).orElseThrow(() ->
+                new ResourceNotFoundException(ErrorCode.NO_CERTIFICATE_WITH_ID, orderParamsDto.getCertificateId()));
 
         Order order = new Order();
         order.setCertificate(certificate);

@@ -2,6 +2,7 @@ package com.epam.esm.service.repository;
 
 import com.epam.esm.service.dto.PageDto;
 import com.epam.esm.service.entity.Tag;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;

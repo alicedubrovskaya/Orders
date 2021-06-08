@@ -2,6 +2,7 @@ package com.epam.esm.controller;
 
 import com.epam.esm.representation.OrderModel;
 import com.epam.esm.representation.assembler.OrderModelAssembler;
+import com.epam.esm.service.dto.OrderParamsDto;
 import com.epam.esm.service.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -27,10 +28,8 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderModel makeOrder(
-            @RequestParam @Min(value = 1, message = "{valid_id}") Long userId,
-            @RequestParam @Min(value = 1, message = "{valid_id}") Long certificateId) {
-        return orderModelAssembler.toModel(orderService.makeOrder(userId, certificateId));
+    public OrderModel makeOrder(@RequestBody OrderParamsDto orderParamsDto) {
+        return orderModelAssembler.toModel(orderService.makeOrder(orderParamsDto));
     }
 
     @GetMapping("/{id}")

@@ -17,10 +17,10 @@ import java.util.List;
 public class SearchCertificateValidator implements Validator<SearchCertificateDto> {
     private final SearchParamsParser parser = new SearchParamsParser();
     private final List<ErrorMessage> errors = new ArrayList<>();
-    private static final String CORRECT_TAGS_ENUMERATION = "^([a-z1-9\\_]+[,])*[a-z1-9\\_]+$";
-    private static final String CORRECT_SORT_ORDERS_ENUMERATION = "^((asc|desc)\\([a-z]+\\),)*(asc\\(|desc\\()[a-z]+\\)$";
+    private static final String CORRECT_TAGS_ENUMERATION = "^([a-z0-9\\_]+[,])*[a-z0-9\\_]+$";
+    private static final String CORRECT_SORT_ORDERS_ENUMERATION = "^((asc|desc)\\([a-zA-Z\\_]+\\),)*(asc\\(|desc\\()[a-zA-Z\\_]+\\)$";
     private static final List<String> CORRECT_FIELDS_TO_SORT_BY = Arrays.asList("id", "name", "description",
-            "cost", "currency", "duration", "create_date", "last_update_date");
+            "cost", "currency", "duration", "dateOfCreation", "dateOfModification");
 
     @Override
     public void validate(SearchCertificateDto searchCertificateDto) {

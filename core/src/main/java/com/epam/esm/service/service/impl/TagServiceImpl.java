@@ -90,10 +90,8 @@ public class TagServiceImpl implements TagService {
                 collect(Collectors.toList())
         ).stream().map(tagConverter::convertToDto).collect(Collectors.toList());
 
-        tagsWithId.forEach(tagWithId -> {
-            tags.stream().filter(tagDto -> tagDto.getName().equals(tagWithId.getName())
-            ).forEach(tagDto -> tagDto.setId(tagWithId.getId()));
-        });
+        tagsWithId.forEach(tagWithId -> tags.stream().filter(tagDto -> tagDto.getName().equals(tagWithId.getName())
+        ).forEach(tagDto -> tagDto.setId(tagWithId.getId())));
         return tags;
     }
 }

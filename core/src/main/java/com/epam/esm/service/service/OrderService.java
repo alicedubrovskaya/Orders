@@ -1,6 +1,7 @@
 package com.epam.esm.service.service;
 
 import com.epam.esm.service.dto.OrderDto;
+import com.epam.esm.service.dto.OrderParamsDto;
 import com.epam.esm.service.dto.PageDto;
 
 import javax.validation.Valid;
@@ -17,7 +18,7 @@ public interface OrderService {
      * @param certificateId
      * @return
      */
-    OrderDto makeOrder(Long userId, Long certificateId);
+    OrderDto makeOrder(@Valid OrderParamsDto orderParamsDto);
 
     /**
      * Finds order by id

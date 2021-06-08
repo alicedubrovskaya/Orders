@@ -22,7 +22,9 @@ public class TagModelAssembler extends RepresentationModelAssemblerSupport<TagDt
         TagModel tagModel = instantiateModel(tagDto);
         TagController controller = methodOn(TagController.class);
         tagModel.add(
-                linkTo(controller.deleteTag(tagDto.getId())).withRel("delete")
+                linkTo(controller.createTag(null)).withRel("create"),
+                linkTo(controller.deleteTag(tagDto.getId())).withRel("delete"),
+                linkTo(controller.getMostPopularTag()).withRel("mostPopular")
         );
         tagModel.setId(tagDto.getId());
         tagModel.setName(tagDto.getName());

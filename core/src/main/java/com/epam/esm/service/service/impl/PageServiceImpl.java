@@ -46,7 +46,7 @@ public class PageServiceImpl implements PageService {
                 new ResourceNotFoundException(ErrorCode.NO_USER_WITH_ID, userId));
 
         long countOfOrders = orderRepository.countAllByUser(user);
-        if (countOfOrders <= neededCountOfItems(pageDto)) {
+        if (countOfOrders > 0 && countOfOrders <= neededCountOfItems(pageDto)) {
             throw new PageNotFoundException(ErrorMessage.PAGE_NOT_FOUND, ErrorCode.NO_PAGE_WITH_ORDERS);
         }
         return new Page(countOfOrders, countOfPages(countOfOrders, pageDto));
@@ -55,7 +55,7 @@ public class PageServiceImpl implements PageService {
     @Override
     public Page buildTagsPage(PageDto pageDto) {
         long countOfTags = tagRepository.countAll();
-        if (countOfTags <= neededCountOfItems(pageDto)) {
+        if (countOfTags > 0 && countOfTags <= neededCountOfItems(pageDto)) {
             throw new PageNotFoundException(ErrorMessage.PAGE_NOT_FOUND, ErrorCode.NO_PAGE_WITH_TAGS);
         }
         return new Page(countOfTags, countOfPages(countOfTags, pageDto));
@@ -68,7 +68,7 @@ public class PageServiceImpl implements PageService {
         Map<String, SortOrder> sortOrders = searchParamsBuilder.buildSortParams(searchCertificateDto);
 
         long countOfCertificates = certificateRepository.countAllByParams(certificateDto, sortOrders);
-        if (countOfCertificates <= neededCountOfItems(pageDto)) {
+        if (countOfCertificates > 0 && countOfCertificates <= neededCountOfItems(pageDto)) {
             throw new PageNotFoundException(ErrorMessage.PAGE_NOT_FOUND, ErrorCode.NO_PAGE_WITH_CERTIFICATES);
         }
         return new Page(countOfCertificates, countOfPages(countOfCertificates, pageDto));

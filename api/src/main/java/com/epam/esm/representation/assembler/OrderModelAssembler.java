@@ -1,5 +1,6 @@
 package com.epam.esm.representation.assembler;
 
+import com.epam.esm.controller.CertificateController;
 import com.epam.esm.controller.OrderController;
 import com.epam.esm.representation.OrderModel;
 import com.epam.esm.representation.PriceModel;
@@ -28,7 +29,7 @@ public class OrderModelAssembler extends RepresentationModelAssemblerSupport<Ord
         OrderModel orderModel = instantiateModel(orderDto);
         orderModel.add(
                 linkTo(methodOn(OrderController.class).getOrder(orderDto.getId())).withSelfRel(),
-                linkTo(methodOn(OrderController.class).makeOrder(null, null)).withSelfRel()
+                linkTo(methodOn(OrderController.class).makeOrder(null)).withSelfRel()
         );
         orderModel.setId(orderDto.getId());
         orderModel.setPrice(new PriceModel(orderDto.getPrice().getCost(), orderDto.getPrice().getCurrency()));
@@ -41,6 +42,8 @@ public class OrderModelAssembler extends RepresentationModelAssemblerSupport<Ord
     @Override
     public CollectionModel<OrderModel> toCollectionModel(Iterable<? extends OrderDto> orderDtos) {
         CollectionModel<OrderModel> collectionModel = super.toCollectionModel(orderDtos);
+        collectionModel.add(linkTo(methodOn(OrderController.class).makeOrder(null))
+                .withRel("makeOrder"));
         return collectionModel;
     }
 }

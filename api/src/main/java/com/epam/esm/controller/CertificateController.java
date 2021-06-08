@@ -51,7 +51,7 @@ public class CertificateController {
     public PageModel<CertificateModel> getGiftCertificates(
             @RequestParam Map<String, String> searchParams,
             @RequestParam(required = false, defaultValue = "1") Integer page,
-            @RequestParam(required = false, defaultValue = "5") Integer size) {
+            @RequestParam(required = false, defaultValue = "20") Integer size) {
 
         SearchCertificateDto searchCertificateDto = SearchCertificateDto.builder()
                 .tagNames(searchParams.get("tags"))

@@ -51,8 +51,6 @@ public class CertificateDtoConverter implements DtoConverter<Certificate, Certif
                     .collect(Collectors.toList());
         }
         certificate.setId(certificateDto.getId());
-        certificate.setDateOfCreation(certificateDto.getDateOfCreation());
-        certificate.setDateOfModification(certificateDto.getDateOfModification());
         certificate.setDuration(certificateDto.getDuration());
         certificate.setName(certificateDto.getName());
         certificate.setDescription(certificateDto.getDescription());

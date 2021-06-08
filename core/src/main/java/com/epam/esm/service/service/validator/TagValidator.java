@@ -14,6 +14,7 @@ import java.util.List;
 @Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class TagValidator implements Validator<TagDto> {
     private final List<ErrorMessage> errors = new ArrayList<>();
+    private static final String CORRECT_TAG = "^[a-z0-9\\_]+$";
 
     @Override
     public void validate(TagDto tagDto) {
@@ -34,7 +35,7 @@ public class TagValidator implements Validator<TagDto> {
             errors.add(ErrorMessage.TAG_NAME_EMPTY);
         }
 
-        if (name != null && !(name.length() > 1 && name.length() <= 255)) {
+        if (name != null && (!(name.length() > 1 && name.length() <= 255) || !name.matches(CORRECT_TAG))) {
             errors.add(ErrorMessage.TAG_NAME_INCORRECT);
         }
     }

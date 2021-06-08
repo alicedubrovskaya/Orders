@@ -10,9 +10,7 @@ import static org.springframework.hateoas.config.EnableHypermediaSupport.Hyperme
 @SpringBootApplication
 @EnableHypermediaSupport(type = {HAL, HAL_FORMS})
 public class CertificateApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(CertificateApplication.class, args);
     }
-
 }

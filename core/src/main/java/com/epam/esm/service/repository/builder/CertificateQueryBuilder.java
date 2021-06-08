@@ -22,6 +22,7 @@ public class CertificateQueryBuilder {
         return query;
     }
 
+    //TODO protected
     public CriteriaQuery<Certificate> buildQuerySearchByParams(CriteriaQuery<Certificate> query,
                                                                Root<Certificate> root,
                                                                CriteriaBuilder builder,
