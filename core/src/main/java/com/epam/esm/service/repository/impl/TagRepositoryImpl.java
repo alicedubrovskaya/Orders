@@ -65,26 +65,6 @@ public class TagRepositoryImpl implements TagRepository {
         return query.getResultList();
     }
 
-//    @Override
-//    public Optional<Tag> findMostPopular() {
-//        try {
-//            Query query = em.createNativeQuery(
-//                    "SELECT tag.id, tag.name FROM tag JOIN certificate_tag ON tag.id=certificate_tag.tag_id " +
-//                            "JOIN certificate ON certificate_tag.tag_id = certificate.id " +
-//                            "JOIN ordr ON certificate.id = ordr.id " +
-//                            "JOIN  user ON ordr.user_id=user.id WHERE user.id= (" +
-//                            "SELECT user.id FROM user JOIN ordr on user.id = ordr.user_id GROUP BY user.id " +
-//                            "ORDER BY SUM(cost) DESC LIMIT 1) " +
-//                            "GROUP BY tag.name, tag.id ORDER BY COUNT(tag.name) DESC LIMIT 1",
-//                    Tag.class);
-//            Tag tag = (Tag) query.getSingleResult();
-//            return Optional.ofNullable(tag);
-//        } catch (NoResultException e) {
-//            return Optional.empty();
-//        }
-//    }
-
-
     @Override
     public Optional<Tag> findMostPopular() {
         try {
